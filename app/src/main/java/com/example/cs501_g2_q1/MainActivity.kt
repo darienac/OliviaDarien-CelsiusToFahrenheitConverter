@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.hsl
+import androidx.compose.ui.graphics.Color.Companion.hsv
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,7 +52,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppLayout(modifier: Modifier = Modifier) {
-    Column(modifier = modifier.fillMaxWidth().padding(16.dp), horizontalAlignment=Alignment.CenterHorizontally) {
+
+    Column(modifier = modifier
+        .fillMaxSize()
+        .padding(16.dp),
+        horizontalAlignment=Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
         var celsiusVal by remember { mutableFloatStateOf(0f) }
         var fahrenheitVal by remember { mutableFloatStateOf(32f) }
 
@@ -65,7 +74,10 @@ fun AppLayout(modifier: Modifier = Modifier) {
             celsiusVal = (fahrenheitVal - 32f) * (5f/9f)
             celsiusVal = floor(celsiusVal * 100f) / 100f
         }
-        Text(text=(if (celsiusVal <= 20f) "I wish it were warmer" else "I wish it were colder"))
+        Text(
+            text=(if (celsiusVal <= 20f) "I wish it were warmer" else "I wish it were colder"),
+            color = (if (celsiusVal <= 20f) Color.hsv(194f, 0.37f, 0.52f) else Color.hsv(14f, 0.51f, 0.70f))
+        )
     }
 }
 
